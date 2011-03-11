@@ -5,18 +5,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 
 from drainhunter import snapshot, group_by_class
+import drainhunter.web
 
 def index(request):
-    objects = group_by_class()
-    if not objects:
-        return HttpResponse('There are no any new objects, wait and refresh the page')
-    else:
-        out = 'Take new <a href="%s">snapshot</a><br /><br />' % reverse('drainhunter-snapshot')
-
-        for k, v in reversed(sorted(objects.items(), key=lambda r: len(r[1]))):
-            out += '<a href="list/%s.dot">%s</a>: %d<br />' % (k, k, len(v))
-
-        return HttpResponse(out)
+    code, content = drainhunter.web.index(reverse('drainhunter-snapshot'))
+    return HttpResponse(content)
 
 def take_snapshot(request):
     snapshot()

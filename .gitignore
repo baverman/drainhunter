@@ -1,3 +1,6 @@
 /.ropeproject
 /.snaked_project
 *.pyc
+/dist
+/build
+/*.egg-info/
