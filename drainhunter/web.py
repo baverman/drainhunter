@@ -7,7 +7,7 @@ def index(snapshot_url):
     else:
         out = 'Take new <a href="%s">snapshot</a><br /><br />' % snapshot_url
 
-        for k, v in reversed(sorted(objects.items(), key=lambda r: len(r[1]))):
+        for k, v in reversed(sorted(objects.items(), key=lambda r: (len(r[1]), r[0]))):
             out += '<a href="list/%s.dot">%s</a>: %d<br />' % (k, k, len(v))
 
         return 200, out
